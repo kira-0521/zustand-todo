@@ -1,39 +1,14 @@
-import { useState } from 'react'
-import { Todo } from '../@types/todo'
+import { useEffect } from 'react'
+import { useTodoStore } from '../store/todoStore'
 
 export const TodoList = () => {
-  const [todos, setTodos] = useState<Todo[]>([
-    {
-      userId: 1,
-      id: 1,
-      title: 'delectus aut autem',
-      completed: false,
-    },
-    {
-      userId: 1,
-      id: 2,
-      title: 'quis ut nam facilis et officia qui',
-      completed: false,
-    },
-    {
-      userId: 1,
-      id: 3,
-      title: 'fugiat veniam minus',
-      completed: false,
-    },
-    {
-      userId: 1,
-      id: 4,
-      title: 'et porro tempora',
-      completed: true,
-    },
-    {
-      userId: 1,
-      id: 5,
-      title: 'laboriosam mollitia et enim quasi adipisci quia provident illum',
-      completed: false,
-    },
-  ])
+  const todos = useTodoStore((state) => state.todos)
+  const fetchTodos = useTodoStore((state) => state.fetchTodos)
+
+  useEffect(() => {
+    fetchTodos()
+  }, [])
+
   return (
     <ul className="flex gap-3 flex-col">
       {todos.map((todo) => (

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { Todo } from '../@types/todo'
 
 export const TodoList = () => {

@@ -9,7 +9,7 @@ export const fetchTodos = async (): Promise<FetchTodosResponse> => {
     return {
       code: ERROR_CODES.NO_ERROR.code,
       message: ERROR_CODES.NO_ERROR.message,
-      todos: data
+      todos: data.slice(0, 10)
     }
   } catch (error: any) {
     const errorResponseTodo = {

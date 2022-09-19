@@ -8,7 +8,7 @@ type Store = {
   editedTodo: Omit<Todo, 'userId' | 'completed'>
   todos: Todo[]
   setEditedTodo: (id: number) => void
-  fetchTodos: () => void
+  fetchTodos: () => Promise<void>
   createTodo: () => void
   updateTodos: () => void
   deleteTodo: (id: number) => void

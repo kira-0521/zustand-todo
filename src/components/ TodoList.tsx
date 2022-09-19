@@ -1,11 +1,11 @@
 import { useEffect } from 'react'
 import { isEmpty } from 'lodash'
 
-import { useTodoStore } from '../store/todoStore'
+import { useTodoSlice } from '../store/todoSlice'
 
 export const TodoList = () => {
-  const todos = useTodoStore((state) => state.todos)
-  const fetchTodos = useTodoStore((state) => state.fetchTodos)
+  const todos = useTodoSlice((state) => state.todos)
+  const fetchTodos = useTodoSlice((state) => state.fetchTodos)
 
   useEffect(() => {
     fetchTodos()

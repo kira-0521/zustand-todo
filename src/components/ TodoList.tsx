@@ -5,6 +5,7 @@ import { useTodoSlice } from '../store/todoSlice'
 
 export const TodoList = () => {
   const todos = useTodoSlice((state) => state.todos)
+  const setEditedTodo = useTodoSlice((state) => state.setEditedTodo)
   const fetchTodos = useTodoSlice((state) => state.fetchTodos)
 
   useEffect(() => {
@@ -25,7 +26,10 @@ export const TodoList = () => {
           >
             <span>{todo.id}. </span>
             <span className="text-gray-500">{todo.title}</span>
-            <button className="bg-gray-400 hover:bg-gray-300 text-white rounded px-2 py-1">
+            <button
+              onClick={() => setEditedTodo(todo.id)}
+              className="bg-gray-400 hover:bg-gray-300 text-white rounded px-2 py-1"
+            >
               編集
             </button>
             <input

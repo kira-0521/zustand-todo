@@ -7,6 +7,7 @@ import { find } from 'lodash'
 type Store = {
   editedTodo: Omit<Todo, 'userId' | 'completed'>
   todos: Todo[]
+  setTodoTitle: (title: string) => void
   setEditedTodo: (id: number) => void
   fetchTodos: () => Promise<void>
   createTodo: () => void
@@ -20,6 +21,11 @@ export const useTodoSlice = create<Store>((set, get) => ({
     title: '',
   },
   todos: [],
+  setTodoTitle(title: string) {
+    set((state) => ({
+      editedTodo: { ...state.editedTodo, title },
+    }))
+  },
   setEditedTodo: (id: number) => {
     set((state) => ({
       editedTodo: { id, title: find(state.todos, { id })!.title },

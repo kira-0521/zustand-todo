@@ -1,14 +1,16 @@
-import './App.css'
-import { TodoForm } from './components/ TodoForm'
-import { TodoList } from './components/ TodoList'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+
+import { Home } from './components/Home'
+import { LoginForm } from './components/LoginForm'
 
 function App() {
   return (
-    <div className="App">
-      <TodoForm />
-      <br />
-      <TodoList />
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<LoginForm />} />
+        <Route path="/home" element={<Home />} />
+      </Routes>
+    </BrowserRouter>
   )
 }
 

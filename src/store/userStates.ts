@@ -1,9 +1,9 @@
 import { atom, selector } from 'recoil'
+import { viewLogger } from '../libs/logger'
+import { getCurrentUserByStorage, setUserStorage } from '../libs/storage/user'
+import { isNil } from 'lodash'
 
-import { ERROR_CODES } from '../libs/api/error'
-import { login } from '../libs/api/user'
-
-type UserValueAtom = {
+export type UserValueAtom = {
   id: number
   name: string
   email: string
@@ -21,6 +21,17 @@ export const userValueAtom = atom<UserValueAtom>({
     name: '',
     email: '',
   },
+  effects: [
+    ({ onSet }) => {
+      onSet((newUser) => {
+        viewLogger('loginUser: ', newUser)
+        const currentUser = getCurrentUserByStorage()
+        if (isNil(currentUser)) {
+          setUserStorage(newUser)
+        }
+      })
+    },
+  ],
 })
 
 export const isLoginSelector = selector<Boolean>({

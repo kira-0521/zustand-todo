@@ -26,6 +26,7 @@ export const useLogin = () => {
   return {
     email,
     setEmail,
+    setUser,
     onClickLogin,
   }
 }

@@ -1,19 +1,29 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import { RecoilRoot } from 'recoil'
+import { useEffect } from 'react'
+import { Routes, Route, useNavigate } from 'react-router-dom'
+import { isNil } from 'lodash'
 
 import { Home } from './components/Home'
 import { LoginForm } from './components/LoginForm'
+import { getCurrentUserByStorage } from './libs/storage/user'
+import { useLogin } from './hooks/useLogin'
 
 function App() {
+  const navigate = useNavigate()
+  const { setUser } = useLogin()
+
+  useEffect(() => {
+    const currentLoginUser = getCurrentUserByStorage()
+    if (!isNil(currentLoginUser)) {
+      setUser(currentLoginUser)
+      navigate('/home')
+    }
+  }, [])
+
   return (
-    <RecoilRoot>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<LoginForm />} />
-          <Route path="/home" element={<Home />} />
-        </Routes>
-      </BrowserRouter>
-    </RecoilRoot>
+    <Routes>
+      <Route path="/" element={<LoginForm />} />
+      <Route path="/home" element={<Home />} />
+    </Routes>
   )
 }
 

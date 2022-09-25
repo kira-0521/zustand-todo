@@ -2,7 +2,7 @@ import { useLogin } from '../../hooks/useLogin'
 import { useNavigate } from 'react-router-dom'
 
 export const Header = () => {
-  const { isLogin, onClickLogin, onClickLogout } = useLogin()
+  const { isLogin, onClickLogout } = useLogin()
 
   const navigate = useNavigate()
 

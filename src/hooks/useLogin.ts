@@ -1,14 +1,19 @@
-import { useRecoilState, useSetRecoilState } from 'recoil'
+import { useRecoilState, useRecoilValue } from 'recoil'
 import { useNavigate } from 'react-router-dom'
 import { useCallback } from 'react'
 
-import { inputtedEmailAtom, userValueAtom } from '../store/userStates'
+import {
+  inputtedEmailAtom,
+  isLoginSelector,
+  userValueAtom,
+} from '../store/userStates'
 import { login } from '../libs/api/user'
 import { ERROR_CODES } from '../libs/api/error'
 
 export const useLogin = () => {
   const [email, setEmail] = useRecoilState(inputtedEmailAtom)
-  const setUser = useSetRecoilState(userValueAtom)
+  const [currentUser, setUser] = useRecoilState(userValueAtom)
+  const isLogin = useRecoilValue(isLoginSelector)
 
   const navigate = useNavigate()
 
@@ -21,12 +26,24 @@ export const useLogin = () => {
       email: res.user[0].email,
     })
     navigate('/home')
-  }, [login, email])
+  }, [login, setUser, email])
+
+  const onClickLogout = useCallback(async () => {
+    setUser({
+      id: 0,
+      name: '',
+      email: '',
+    })
+    navigate('/')
+  }, [setUser])
 
   return {
     email,
     setEmail,
+    currentUser,
+    isLogin,
     setUser,
     onClickLogin,
+    onClickLogout,
   }
 }

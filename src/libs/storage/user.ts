@@ -13,3 +13,7 @@ export const getCurrentUserByStorage = (): UserValueAtom | undefined => {
 export const setUserStorage = (user: UserValueAtom) => {
   localStorage.setItem(CURRENT_USER_STORAGE_KEY, JSON.stringify(user))
 }
+
+export const removeUserStorage = () => {
+  localStorage.removeItem(CURRENT_USER_STORAGE_KEY)
+}

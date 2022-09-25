@@ -4,12 +4,11 @@ import { useCallback } from 'react'
 import { Todo } from '../@types/todo'
 import { userValueAtom } from '../store/userStates'
 import { editedTodoAtom, todoAtom } from '../store/todoStates'
-import { cloneDeep } from 'lodash'
 
 export const useTodo = () => {
-  const [editedTodo, setEditedTodo] = useRecoilState(editedTodoAtom)
   const currentUser = useRecoilValue(userValueAtom)
   const [currentTodos, setTodos] = useRecoilState(todoAtom)
+  const [editedTodo, setEditedTodo] = useRecoilState(editedTodoAtom)
 
   const resetEditedTodo = useCallback(() => {
     setEditedTodo({
@@ -33,7 +32,7 @@ export const useTodo = () => {
 
   const updateTodo = useCallback(async () => {
     setTodos((todos) => {
-      return cloneDeep(todos).map((todo) => {
+      return todos.map((todo) => {
         if (todo.id === editedTodo.id) {
           const { id, userId, title, completed } = editedTodo
           return {
@@ -47,7 +46,24 @@ export const useTodo = () => {
       })
     })
     resetEditedTodo()
-  }, [setTodos])
+  }, [setTodos, editedTodo])
 
-  return { createTodo, updateTodo }
+  const onChangeComplete = useCallback(
+    (id: number) => {
+      setTodos((todos) => {
+        return todos.map((todo) => {
+          if (todo.id === id) {
+            return {
+              ...todo,
+              completed: !todo.completed,
+            }
+          }
+          return todo
+        })
+      })
+    },
+    [setTodos]
+  )
+
+  return { createTodo, updateTodo, onChangeComplete }
 }

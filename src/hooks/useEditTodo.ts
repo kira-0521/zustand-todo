@@ -1,9 +1,11 @@
 import { ChangeEvent, useCallback } from 'react'
 import { useRecoilState, useRecoilValue } from 'recoil'
+import { Todo } from '../@types/todo'
 
 import { editedTodoAtom, isEditSelector } from '../store/todoStates'
 
 export const useEditTodo = () => {
+  console.log('useEditTodo')
   const isEdit = useRecoilValue(isEditSelector)
   const [editedTodo, setEditedTodo] = useRecoilState(editedTodoAtom)
 
@@ -11,7 +13,7 @@ export const useEditTodo = () => {
     (e: ChangeEvent<HTMLInputElement>) => {
       setEditedTodo((todo) => ({
         ...todo,
-        title: e.target.value,
+        [e.target.name]: e.target.value,
       }))
     },
     [setEditedTodo]

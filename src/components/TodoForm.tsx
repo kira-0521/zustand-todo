@@ -2,8 +2,8 @@ import { useEditTodo } from '../hooks/useEditTodo'
 import { useTodo } from '../hooks/useTodo'
 
 export const TodoForm = () => {
-  const { isEdit, onChangeTodo, editedTodo } = useEditTodo()
   const { createTodo, updateTodo } = useTodo()
+  const { isEdit, onChangeTodo, editedTodo } = useEditTodo()
 
   return (
     <div className="flex items-center justify-center gap-x-2">
@@ -14,6 +14,7 @@ export const TodoForm = () => {
         <input
           type="text"
           id="title"
+          name="title"
           onChange={onChangeTodo}
           value={editedTodo.title}
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"

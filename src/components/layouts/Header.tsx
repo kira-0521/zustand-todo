@@ -1,11 +1,14 @@
 import { useLogin } from '../../hooks/useLogin'
+import { useNavigate } from 'react-router-dom'
 
 export const Header = () => {
   const { isLogin, onClickLogin, onClickLogout } = useLogin()
 
+  const navigate = useNavigate()
+
   return (
     <header className="flex items-center justify-end p-6">
-      <button onClick={isLogin ? onClickLogout : onClickLogin}>
+      <button onClick={isLogin ? onClickLogout : () => navigate('/')}>
         {isLogin ? (
           <div className="flex gap-x-2 text-gray-500">
             <span>Logout</span>

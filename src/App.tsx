@@ -6,6 +6,7 @@ import { Home } from './components/Home'
 import { LoginForm } from './components/LoginForm'
 import { getCurrentUserByStorage } from './libs/storage/user'
 import { useLogin } from './hooks/useLogin'
+import { Header } from './components/layouts/Header'
 
 function App() {
   const navigate = useNavigate()
@@ -13,17 +14,19 @@ function App() {
 
   useEffect(() => {
     const currentLoginUser = getCurrentUserByStorage()
-    if (!isNil(currentLoginUser)) {
-      setUser(currentLoginUser)
-      navigate('/home')
-    }
+    if (isNil(currentLoginUser)) return
+    setUser(currentLoginUser)
+    navigate('/home')
   }, [])
 
   return (
-    <Routes>
-      <Route path="/" element={<LoginForm />} />
-      <Route path="/home" element={<Home />} />
-    </Routes>
+    <>
+      <Header />
+      <Routes>
+        <Route path="/" element={<LoginForm />} />
+        <Route path="/home" element={<Home />} />
+      </Routes>
+    </>
   )
 }
 

@@ -1,27 +1,8 @@
-import { ChangeEvent, useCallback } from 'react'
-import { useRecoilState, useSetRecoilState } from 'recoil'
-import { login } from '../libs/api/user'
-
-import { inputtedEmailAtom, userValueAtom } from '../store/userStates'
-import { ERROR_CODES } from '../libs/api/error'
-import { useNavigate } from 'react-router-dom'
+import { ChangeEvent } from 'react'
+import { useLogin } from '../hooks/useLogin'
 
 export const LoginForm = () => {
-  const [email, setEmail] = useRecoilState(inputtedEmailAtom)
-  const setUser = useSetRecoilState(userValueAtom)
-
-  const navigate = useNavigate()
-
-  const onClickLogin = useCallback(async () => {
-    const res = await login(email)
-    if (res.code !== ERROR_CODES.NO_ERROR.code) return
-    setUser({
-      id: res.user[0].id,
-      name: res.user[0].name,
-      email: res.user[0].email,
-    })
-    navigate('/home')
-  }, [login, email])
+  const { email, setEmail, onClickLogin } = useLogin()
 
   return (
     <div className="flex items-center justify-center gap-x-2 h-screen">
